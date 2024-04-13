@@ -52,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(fontSize: 24, color: Colors.blue),
                   ),
                   TextFormField(
+                    textInputAction: TextInputAction.next,
                     controller: accountController,
                     decoration: const InputDecoration(
                       labelText: "Account",
@@ -60,6 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
+                    textInputAction: TextInputAction.go,
+                    onFieldSubmitted: (value) => login,
                     controller: passwordController,
                     obscureText: true,
                     decoration: const InputDecoration(

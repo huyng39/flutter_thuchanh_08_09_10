@@ -5,6 +5,7 @@ import 'package:flutter_thuchanh_08/app/page/detail.dart';
 import 'package:flutter_thuchanh_08/app/route/page1.dart';
 import 'package:flutter_thuchanh_08/app/route/page2.dart';
 import 'package:flutter_thuchanh_08/app/route/page3.dart';
+import 'package:flutter_thuchanh_08/app/page/product/productwidget_2.dart';
 import 'package:flutter/material.dart';
 import '../app/page/defaultwidget.dart';
 import '../app/data/sharepre.dart';
@@ -178,7 +179,7 @@ class _MainpageState extends State<Mainpage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
-            label: 'History',
+            label: 'Category',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shop),
