@@ -51,8 +51,9 @@ class _MainpageState extends State<Mainpage> {
         nameWidgets = "Home";
         break;
       case 1:
-        nameWidgets = "Contact";
-        break;
+        {
+          return const ProductWidget();
+        }
       case 2:
         nameWidgets = "Info";
         break;
