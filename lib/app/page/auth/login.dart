@@ -4,6 +4,8 @@ import '../register.dart';
 import 'package:flutter_thuchanh_08/mainpage.dart';
 import 'package:flutter/material.dart';
 import '../../data/sharepre.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,14 +17,25 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController accountController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
   login() async {
     //lấy token (lưu share_preference)
     String token = await APIRepository()
         .login(accountController.text, passwordController.text);
     var user = await APIRepository().current(token);
+    // tải hiệu ứng chờ loading
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
     // save share
     saveUser(user);
     //
+    setState(() {
+      isLoading = true;
+    });
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const Mainpage()));
     return token;
@@ -34,7 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text("Login"),
       ),
-      body: SingleChildScrollView(
+      body: isLoading ? LoadingAnimationWidget.discreteCircle(color: Colors.blue,size: 40)
+      :SingleChildScrollView(
         child: Container(
           alignment: Alignment.center,
           child: Padding(
@@ -54,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     textInputAction: TextInputAction.next,
                     controller: accountController,
+                    validator: RequiredValidator(errorText: 'Please Enter'),
                     decoration: const InputDecoration(
                       labelText: "Account",
                       icon: Icon(Icons.person),
@@ -62,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 16),
                   TextFormField(
                     textInputAction: TextInputAction.go,
+                    validator: RequiredValidator(errorText: 'Please Enter'),
                     onFieldSubmitted: (value) => login,
                     controller: passwordController,
                     obscureText: true,

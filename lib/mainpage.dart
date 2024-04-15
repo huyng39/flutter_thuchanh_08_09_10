@@ -51,13 +51,17 @@ class _MainpageState extends State<Mainpage> {
         nameWidgets = "Home";
         break;
       case 1:
+       nameWidgets = "Category";
+        break;
+      // nút all product dành cho việc thử nghiệm get list sản phẩm
+      case 2:
         {
           return const ProductWidget();
         }
-      case 2:
-        nameWidgets = "Info";
-        break;
       case 3:
+        nameWidgets = "Cart";
+        break;
+      case 4:
         {
           return const Detail();
         }
@@ -73,6 +77,8 @@ class _MainpageState extends State<Mainpage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("HL Mobile"),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       drawer: Drawer(
         child: ListView(
@@ -81,7 +87,7 @@ class _MainpageState extends State<Mainpage> {
           children: [
             DrawerHeader(
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 243, 152, 33),
+                color: Colors.blue,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +102,9 @@ class _MainpageState extends State<Mainpage> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(user.fullName!),
+                  Text(user.fullName!,
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 20)),
                 ],
               ),
             ),
@@ -110,8 +118,8 @@ class _MainpageState extends State<Mainpage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.contact_mail),
-              title: const Text('History'),
+              leading: const Icon(Icons.history),
+              title: const Text('Buy History'),
               onTap: () {
                 Navigator.pop(context);
                 _selectedIndex = 1;
@@ -128,8 +136,8 @@ class _MainpageState extends State<Mainpage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.pages),
-              title: const Text('Page1'),
+              leading: const Icon(Icons.favorite),
+              title: const Text('Favorite List'),
               onTap: () {
                 Navigator.pop(context);
                 _selectedIndex = 0;
@@ -138,8 +146,8 @@ class _MainpageState extends State<Mainpage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.pages),
-              title: const Text('Page2'),
+              leading: const Icon(Icons.key),
+              title: const Text('Change password'),
               onTap: () {
                 Navigator.pop(context);
                 _selectedIndex = 0;
@@ -147,16 +155,16 @@ class _MainpageState extends State<Mainpage> {
                     MaterialPageRoute(builder: (context) => const Page2()));
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.pages),
-              title: const Text('Page3'),
-              onTap: () {
-                Navigator.pop(context);
-                _selectedIndex = 0;
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Page3()));
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.pages),
+            //   title: const Text('Page3'),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     _selectedIndex = 0;
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => const Page3()));
+            //   },
+            // ),
             const Divider(
               color: Colors.black,
             ),
@@ -179,11 +187,16 @@ class _MainpageState extends State<Mainpage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history),
+            icon: Icon(Icons.category),
             label: 'Category',
           ),
+          // nút all product dành cho việc thử nghiệm get list sản phẩm
           BottomNavigationBarItem(
-            icon: Icon(Icons.shop),
+            icon: Icon(Icons.inventory),
+            label: 'All product',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
             label: 'Cart',
           ),
           BottomNavigationBarItem(
@@ -192,7 +205,7 @@ class _MainpageState extends State<Mainpage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),

@@ -2,6 +2,7 @@ import 'package:flutter_thuchanh_08/app/data/api.dart';
 import 'package:flutter_thuchanh_08/app/model/register.dart';
 import 'package:flutter_thuchanh_08/app/page/auth/login.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -78,7 +79,11 @@ class _RegisterState extends State<Register> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const LoginScreen()));
-                          } else {
+                          } 
+                          else if(respone.isEmpty){
+                            LoadingAnimationWidget.bouncingBall(color: Colors.blue, size: 35);
+                          }
+                          else {
                             print(respone);
                           }
                         },

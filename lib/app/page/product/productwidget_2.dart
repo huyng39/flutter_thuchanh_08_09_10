@@ -7,6 +7,7 @@ import '../../model/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import '../product/productbody.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class ProductWidget extends StatefulWidget {
   const ProductWidget({super.key});
@@ -23,9 +24,11 @@ class _ProductWidgetState extends State<ProductWidget> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     // strPro = pref.getStringList('product')! as List<Product>;
     // String strPro = pref.getString('product')!;
-    List<String> lstStrPro = pref.getStringList('product')!;
+    // lỗi key tại đây
+    List<String> lstStrPro = pref.getStringList('items')!;
     lstPro = Product.fromJson(jsonDecode(lstStrPro as String)) as List<Product>;
     setState(() {});
+    await Future.delayed(const Duration(seconds: 1));
     return '';
   }
 
@@ -104,28 +107,42 @@ class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getDataPro(),
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        return Center(
-          child: Column(
-            children: [
-              Expanded(
-                  child: GridView.builder(
-                      itemCount: lstPro.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 1,
-                              crossAxisSpacing: 8,
-                              mainAxisSpacing: 8),
-                      itemBuilder: ((context, index) {
-                        return itemProView(lstPro[index]);
-                      })))
-            ],
-          ),
-        );
-      },
-    );
+        future: getDataPro(),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+              // child: LoadingAnimationWidget.discreteCircle(
+              //   color: Colors.blue,
+              //   size: 200,
+              // ),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}',
+              style: const TextStyle(color: Colors.red,fontSize: 20),),
+            );
+          } else {
+            return Center(
+              child: Column(
+                children: [
+                  Expanded(
+                      child: GridView.builder(
+                          itemCount: lstPro.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 1,
+                                  crossAxisSpacing: 8,
+                                  mainAxisSpacing: 8),
+                          itemBuilder: ((context, index) {
+                            return itemProView(lstPro[index]);
+                          })))
+                ],
+              ),
+            );
+          }
+        });
   }
 
   // @override
