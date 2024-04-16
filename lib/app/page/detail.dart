@@ -19,7 +19,7 @@ class _DetailState extends State<Detail> {
   getDataUser() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     strUser = pref.getString('user')!;
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 10));
     user = User.fromJson(jsonDecode(strUser));
     setState(() {});
   }
