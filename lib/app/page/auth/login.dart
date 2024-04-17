@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_thuchanh_08/app/config/const.dart';
 import 'package:flutter_thuchanh_08/app/data/api.dart';
 import '../register.dart';
@@ -39,17 +41,21 @@ class _LoginScreenState extends State<LoginScreen> {
     // save share
     saveUser(user);
     //
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const Mainpage()));
+    const LoadAnimation();
+    
+    Timer(const Duration(seconds: 2), () => { 
+      Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Mainpage())),
+    });
     return token;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
+      // appBar: AppBar(
+      //   title: const Text("Login"),
+      // ),
       body: isLoading
           ? const Center(
               child: LoadAnimation(),
