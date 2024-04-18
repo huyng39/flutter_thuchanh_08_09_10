@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_thuchanh_08/app/model/register.dart';
 import 'package:flutter_thuchanh_08/app/model/user.dart';
 import 'package:dio/dio.dart';
@@ -13,8 +14,10 @@ class API {
   Dio get sendRequest => _dio;
 }
 
-class APIRepository {
+class APIRepository with ChangeNotifier{
   API api = API();
+
+  int _statusCode = 0;
 
   Map<String, dynamic> header(String token) {
     return {
@@ -45,6 +48,9 @@ class APIRepository {
       if (res.statusCode == 200) {
         print("ok");
         return "ok";
+      } else if (res.statusCode == 401) {
+        _statusCode = 401;
+        return "Error data";
       } else {
         print("fail");
         return "signup fail";
@@ -65,10 +71,26 @@ class APIRepository {
         final tokenData = res.data['data']['token'];
         print("ok login");
         return tokenData;
-      } else {
+      } 
+      else {
         return "login fail";
       }
-    } catch (ex) {
+
+    } 
+
+    on DioException catch (e) {
+    if (e.response != null) {
+      // If the request was made and the server responded with a status code
+      print(e.response!.statusCode.toString());
+      return e.response!.statusCode.toString();
+    } else {
+      // If something went wrong when sending the request
+      print("Connection Error");
+      return "Connection Error";
+    }
+  } 
+    
+    catch (ex) {
       print(ex);
       rethrow;
     }

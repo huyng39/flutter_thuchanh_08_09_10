@@ -26,6 +26,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _imageURL = TextEditingController();
   String gendername = 'None';
   String temp = '';
+  bool isLoading = false;
 
   Future<String> register() async {
     return await APIRepository().register(Signup(
@@ -40,6 +41,17 @@ class _RegisterState extends State<Register> {
         gender: getGender(),
         imageUrl: _imageURL.text,
         numberID: _numberIDController.text));
+  }
+
+  void isSignUp() async {
+    setState(() {
+      isLoading = true;
+    });
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   @override
@@ -74,20 +86,28 @@ class _RegisterState extends State<Register> {
                       child: OutlinedButton(
                         onPressed: () async {
                           String respone = await register();
+
+                          if (isLoading) return;
+                          setState(
+                            () => isLoading = true,
+                          );
+
                           if (respone == "ok") {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const LoginScreen()));
-                          } 
-                          else if(respone != "ok"){
-                            LoadingAnimationWidget.bouncingBall(color: Colors.blue, size: 35);
-                          }
-                          else {
+                          } else if (respone != "ok") {
+                            LoadingAnimationWidget.bouncingBall(
+                                color: Colors.blue, size: 35);
+                          } else {
                             print(respone);
                           }
                         },
-                        child: const Text('Register'),
+                        child: isLoading
+                            ? LoadingAnimationWidget.waveDots(
+                                color: Colors.purple, size: 35)
+                            : const Text('Register'),
                       ),
                     ),
                     const SizedBox(
@@ -112,6 +132,10 @@ class _RegisterState extends State<Register> {
     return "Other";
   }
 
+  void checkValidator() {
+    if (_passwordController != _confirmPasswordController) {}
+  }
+
   //có thể thêm các biến cho phù hợp với từng field
   Widget textField(
       TextEditingController controller, String label, IconData icon) {
@@ -124,6 +148,11 @@ class _RegisterState extends State<Register> {
           setState(() {
             temp = value;
           });
+        },
+        validator: (value) {
+          if (_passwordController != _confirmPasswordController) {
+            return 'Confirm password is not correct!';
+          }
         },
         decoration: InputDecoration(
             labelText: label,
