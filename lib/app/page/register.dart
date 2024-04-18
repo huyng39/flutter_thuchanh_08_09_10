@@ -80,7 +80,7 @@ class _RegisterState extends State<Register> {
                                 MaterialPageRoute(
                                     builder: (context) => const LoginScreen()));
                           } 
-                          else if(respone.isEmpty){
+                          else if(respone != "ok"){
                             LoadingAnimationWidget.bouncingBall(color: Colors.blue, size: 35);
                           }
                           else {

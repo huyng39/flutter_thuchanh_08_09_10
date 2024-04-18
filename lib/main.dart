@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_thuchanh_08/app/page/auth/login.dart';
+import 'package:flutter_thuchanh_08/loading.dart';
 
 void main() {
   runApp(const MainApp());
