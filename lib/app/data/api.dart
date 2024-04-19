@@ -49,7 +49,7 @@ class APIRepository with ChangeNotifier{
         print("ok");
         return "ok";
       } else if (res.statusCode == 401) {
-        _statusCode = 401;
+        print("Error data");
         return "Error data";
       } else {
         print("fail");
@@ -75,14 +75,15 @@ class APIRepository with ChangeNotifier{
       else {
         return "login fail";
       }
+    }
+    
 
-    } 
-
+    // hiển thị status code
     on DioException catch (e) {
     if (e.response != null) {
       // If the request was made and the server responded with a status code
-      print(e.response!.statusCode.toString());
-      return e.response!.statusCode.toString();
+      print('Error response status code: ${e.response!.statusCode}');
+      return 'Error response status code';
     } else {
       // If something went wrong when sending the request
       print("Connection Error");

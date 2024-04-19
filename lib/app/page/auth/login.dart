@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_thuchanh_08/app/config/const.dart';
 import 'package:flutter_thuchanh_08/app/data/api.dart';
 import '../register.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 import '../../data/sharepre.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:flutter_thuchanh_08/loading.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   var response;
   String token = '';
+  String errorText = '';
 
   login() async {
     //lấy token (lưu share_preference)
@@ -42,12 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = false;
       });
     });
-
     // save share
     saveUser(user);
     //
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const Mainpage()));
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => const Mainpage()));
     return token;
   }
 
@@ -61,7 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Container(
           alignment: Alignment.center,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(
+                bottom: 10.0, left: 10.0, right: 10.0, top: 50.0),
             child: Center(
               child: Form(
                 key: _formKey,
@@ -108,34 +109,43 @@ class _LoginScreenState extends State<LoginScreen> {
                             backgroundColor: Colors.blue,
                           ),
                           onPressed: () async {
-
                             //kiểm tra nếu pass hết validator
                             if (_formKey.currentState!.validate()) {
                               if (isLoading) return;
                               setState(
                                 () => isLoading = true,
                               );
-                              login();
+                              // login();
 
                               //thông báo lỗi nếu ko tìm thấy user
-                              String token = await login();
-                              if (token == '401' || token == '500') {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const AlertDialog(
-                                      title: Text("Alert"),
-                                      content: Text(
-                                          "Please check your information again!"),
-                                    );
-                                  });
-                                  setState(
-                                () => isLoading = false,
-                              );
+                              String response = await login();
+                              if (response == token) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Mainpage()));
+                                setState(
+                                  () => isLoading = false,
+                                );
+                              } 
+                              else {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const AlertDialog(
+                                        title: Text("Alert"),
+                                        content: SingleChildScrollView(
+                                          child: Text(
+                                              "Please check your information again!"),
+                                        ),
+                                      );
+                                    });
+                                setState(
+                                  () => isLoading = false,
+                                );
+                              }
                             }
-                            }
-
-                            
                           },
                           child: isLoading
                               ? LoadingAnimationWidget.waveDots(
