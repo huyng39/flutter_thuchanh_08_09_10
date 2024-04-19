@@ -7,7 +7,7 @@ class Page1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Page 1"),
+        title: const Text("Favorite List"),
       ),
     );
   }

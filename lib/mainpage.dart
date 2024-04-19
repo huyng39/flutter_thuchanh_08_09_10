@@ -152,7 +152,7 @@ class _MainpageState extends State<Mainpage> {
                 Navigator.pop(context);
                 _selectedIndex = 0;
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Page2()));
+                    MaterialPageRoute(builder: (context) => const ChangePassword()));
               },
             ),
             // ListTile(
