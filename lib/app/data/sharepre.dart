@@ -41,3 +41,9 @@ Future<User> getUser() async {
   String strUser = pref.getString('user')!;
   return User.fromJson(jsonDecode(strUser));
 }
+
+Future<String> getToken() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String check = pref.getString('authToken')!;
+  return check;
+}

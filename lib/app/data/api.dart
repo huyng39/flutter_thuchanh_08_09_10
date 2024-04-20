@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_thuchanh_08/app/data/sharepre.dart';
+import 'package:flutter_thuchanh_08/app/model/product.dart';
 import 'package:flutter_thuchanh_08/app/model/register.dart';
 import 'package:flutter_thuchanh_08/app/model/user.dart';
 import 'package:dio/dio.dart';
@@ -107,5 +109,43 @@ class APIRepository with ChangeNotifier{
     }
   }
 
-  
+  // Lấy danh sách product
+  Future<List<Product>> getProduct(int? categoryID) async {
+    try {
+      User user =
+          await getUser(); // Kiểm tra và tải thông tin người dùng từ bộ nhớ đệm
+
+      String token = await getToken();
+      var path = categoryID == null
+          ? '/Product/getList?accountID=${user.accountId}'
+          : '/Product/getListByCatId?categoryID=${categoryID}&accountID=${user.accountId}';
+      // Xây dựng URL với các tham số query
+      // var uri = categoryID == null
+      //     ? Uri.parse(path)
+      //         .replace(queryParameters: {'accountID': user.accountId})
+      //     : Uri.parse(path).replace(
+      //         queryParameters: {
+      //           'categoryID': categoryID,
+      //           'accountID': user.accountId
+      //         },
+      //       );
+
+      // Gửi yêu cầu API
+      Response res = await api.sendRequest
+          .get(path.toString(), options: Options(headers: header(token)));
+      // Kiểm tra mã phản hồi
+      if (res.statusCode == 200) {
+        // Xử lý và trả về dữ liệu
+        return List<Product>.from(
+            res.data.map((item) => Product.fromJson(item)));
+      } else {
+        // Nếu có lỗi, ném ra ngoại lệ
+        throw Exception('Failed to load products: ${res.statusCode}');
+      }
+    } catch (ex) {
+      print(ex);
+      rethrow;
+    }
+  }
+
 }
