@@ -84,7 +84,7 @@ import 'package:intl/intl.dart';
 //   }
 // }
 
-Widget itemProView(Product productModel) {
+Widget itemProView(Product productModel, BuildContext context) {
   return Container(
     margin: const EdgeInsets.only(left: 5, right: 5),
     padding: const EdgeInsets.all(8),

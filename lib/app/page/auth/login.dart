@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     });
     // save share
-    saveUser(user);
+    saveUser(user,token);
     //
     // Navigator.push(
     //     context, MaterialPageRoute(builder: (context) => const Mainpage()));
@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Container(
           alignment: Alignment.center,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.only(bottom: 20.0,left: 20.0,right: 20.0,top: 60.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,

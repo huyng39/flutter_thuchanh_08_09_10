@@ -58,7 +58,7 @@ class User {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idNumber'] = idNumber;
-    data['accountId'] = accountId;
+    data['accountID'] = accountId;
     data['gender'] = gender;
     data['fullName'] = fullName;
     data['gender'] = gender;

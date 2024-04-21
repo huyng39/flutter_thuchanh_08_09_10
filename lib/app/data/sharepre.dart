@@ -6,11 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
 
-Future<bool> saveUser(User objUser) async {
+//khai báo thêm biến token khi save user để tránh bị null token khi getList
+Future<bool> saveUser(User objUser,String token) async {
   try {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? check = prefs.getString('user');
+    if (check != null) {
+      prefs.setString('user', '');
+      prefs.setString('authToken', '');
+    }
     String strUser = jsonEncode(objUser);
     prefs.setString('user', strUser);
+    prefs.setString('authToken', token);
     print("Luu thanh cong: $strUser");
     return true;
   } catch (e) {
@@ -44,6 +51,7 @@ Future<User> getUser() async {
 
 Future<String> getToken() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
+  //error 
   String check = pref.getString('authToken')!;
   return check;
 }

@@ -1,14 +1,15 @@
-import 'dart:ffi';
+import 'dart:convert';
+import 'dart:io';
 
 class Product {
   int? id;
   String? nameProduct;
   String? description;
   String? imageURL;
-  double? price;
+  int? price;
   int? categoryID;
   String? categoryName;
-  
+
   Product({
     required this.id,
     required this.nameProduct,
@@ -31,7 +32,7 @@ class Product {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'id': id,
       'nameProduct': nameProduct,
       'description': description,
@@ -42,28 +43,30 @@ class Product {
     };
   }
 
-
   factory Product.fromJson(Map<String, dynamic> json) => Product(
-        id:  json["id"],
+        id: json["id"],
         nameProduct: json["name"],
         description: json["description"],
-        imageURL: json["imageURL"] == null || json["imageURL"] == ''
-            ? ""
-            : json['imageURL'],
+        imageURL: json["imageURL"],
         price: json["price"],
         categoryID: json["categoryID"],
         categoryName: json["categoryName"],
       );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = nameProduct;
-    data['description'] = description;
-    data['imageURL'] = imageURL;
-    data['price'] = price;
-    data['categoryID'] = categoryID;
-    data['categoryName'] = categoryName;
-    return data;
-  }
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = <String, dynamic>{};
+  //   data['id'] = id;
+  //   data['name'] = nameProduct;
+  //   data['description'] = description;
+  //   data['imageURL'] = imageURL;
+  //   data['price'] = price;
+  //   data['categoryID'] = categoryID;
+  //   data['categoryName'] = categoryName;
+  //   return data;
+  // }
+
+  String toJson() => json.encode(toMap());
+  @override
+  String toString() =>
+      'ProductModel(id: $id, name: $nameProduct,price:$price,img:$imageURL ,desc: $description,catId:$categoryID)';
 }

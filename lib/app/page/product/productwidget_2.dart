@@ -156,7 +156,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                                   mainAxisSpacing: 8),
                           itemBuilder: ((context, index) {
                             final itemPro = snapshot.data![index];
-                            return itemProView(itemPro);
+                            return itemProView(itemPro,context);
                           })))
                 ],
               ),

@@ -119,6 +119,10 @@ class APIRepository with ChangeNotifier{
       var path = categoryID == null
           ? '/Product/getList?accountID=${user.accountId}'
           : '/Product/getListByCatId?categoryID=${categoryID}&accountID=${user.accountId}';
+          
+      var pathAll = '/Product/getListAdmin';
+
+      var path2 = '/Product/getList?accountID=${user.accountId}';
       // Xây dựng URL với các tham số query
       // var uri = categoryID == null
       //     ? Uri.parse(path)
@@ -132,7 +136,7 @@ class APIRepository with ChangeNotifier{
 
       // Gửi yêu cầu API
       Response res = await api.sendRequest
-          .get(path.toString(), options: Options(headers: header(token)));
+          .get(path2.toString(), options: Options(headers: header(token)));
       // Kiểm tra mã phản hồi
       if (res.statusCode == 200) {
         // Xử lý và trả về dữ liệu
