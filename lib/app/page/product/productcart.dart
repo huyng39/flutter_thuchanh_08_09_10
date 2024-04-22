@@ -5,7 +5,7 @@ import 'package:flutter_thuchanh_08/app/model/product/product.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_thuchanh_08/app/model/product/product_viewmodel.dart';
 import 'package:flutter_thuchanh_08/app/data/api.dart';
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class ProductCart extends StatefulWidget {
   const ProductCart({Key? key}) : super(key: key);
@@ -83,71 +83,96 @@ class _ProductCartState extends State<ProductCart> {
                         value.lst.clear();
                         print('Thanh toán thành công');
                         setState(() {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Column(
-                                  children: [
-                                    Icon(Icons.check_circle,
-                                        color: Colors.green,size: 50,), // Success icon
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "Thanh toán thành công",
-                                      style: TextStyle(color: Colors.green),
-                                    ),
-                                  ],
-                                ),
-                                content: Text(
-                                  "Cảm ơn bạn đã mua hàng.",
-                                  style: TextStyle(color: Colors.black87),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text("Đóng"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                          AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.success,
+                                animType: AnimType.scale,
+                                title: 'Thanh toán thành công',
+                                desc: 'Cảm ơn bạn đã mua hàng.',
+                                btnOkOnPress: () {},
+                                headerAnimationLoop: false,
+                              ).show();
                         });
+                        // setState(() {
+                        //   showDialog(
+                        //     context: context,
+                        //     builder: (BuildContext context) {
+                        //       return AlertDialog(
+                        //         title: Column(
+                        //           children: [
+                        //             Icon(Icons.check_circle,
+                        //                 color: Colors.green,size: 50,), // Success icon
+                        //             SizedBox(width: 10),
+                        //             Text(
+                        //               "Thanh toán thành công",
+                        //               style: TextStyle(color: Colors.green),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         content: Text(
+                        //           "Cảm ơn bạn đã mua hàng.",
+                        //           style: TextStyle(color: Colors.black87),
+                        //         ),
+                        //         actions: [
+                        //           TextButton(
+                        //             onPressed: () {
+                        //               Navigator.of(context).pop();
+                        //             },
+                        //             child: Text("Đóng"),
+                        //           ),
+                        //         ],
+                        //       );
+                        //     },
+                        //   );
+                        // });
+                        
                       } else
                         print('Thanh toán không thành công');
                     } else {
+                      AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.error,
+                                animType: AnimType.scale,
+                                title: 'Không thể thanh toán',
+                                desc: 'Vui lòng thêm ít nhất một sản phẩm\ntrước khi thanh toán',
+                                btnOkOnPress: () {},
+                                btnOkColor: Colors.red,
+                                headerAnimationLoop: false,
+                              ).show();
                       // Show dialog to add items
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Column(
-                              children: [
-                                Icon(Icons.cancel,
-                                    color: Colors.red,size: 50,), // Error icon
-                                SizedBox(width: 5),
-                                Text(
-                                  "Không thể thanh toán!",
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              ],
-                            ),
-                            content: Text(
-                              "Vui lòng thêm ít nhất một sản phẩm trước khi thanh toán.",
-                              style: TextStyle(color: Colors.black87),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text("Đóng"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (BuildContext context) {
+                      //     return AlertDialog(
+                      //       title: Column(
+                      //         children: [
+                      //           Icon(
+                      //             Icons.cancel,
+                      //             color: Colors.red,
+                      //             size: 50,
+                      //           ), // Error icon
+                      //           SizedBox(width: 5),
+                      //           Text(
+                      //             "Không thể thanh toán!",
+                      //             style: TextStyle(color: Colors.red),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       content: Text(
+                      //         "Vui lòng thêm ít nhất một sản phẩm trước khi thanh toán.",
+                      //         style: TextStyle(color: Colors.black87),
+                      //       ),
+                      //       actions: [
+                      //         TextButton(
+                      //           onPressed: () {
+                      //             Navigator.of(context).pop();
+                      //           },
+                      //           child: Text("Đóng"),
+                      //         ),
+                      //       ],
+                      //     );
+                      //   },
+                      // );
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -160,7 +185,10 @@ class _ProductCartState extends State<ProductCart> {
                           BorderRadius.circular(30.0), // Rounded corner radius
                     ),
                   ),
-                  icon: Icon(Icons.payment,color: Colors.white,), // Add icon here
+                  icon: Icon(
+                    Icons.payment,
+                    color: Colors.white,
+                  ), // Add icon here
                   label: Text(
                     'Thanh toán',
                     style: TextStyle(

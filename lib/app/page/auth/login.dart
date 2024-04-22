@@ -59,8 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
        ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Đăng nhập không thành công!\n Vui lòng kiểm tra lại.',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            'Đăng nhập không thành công!\nVui lòng kiểm tra lại.',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.white),
           ),
           backgroundColor: Colors.red,
         ),
@@ -108,10 +108,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
-                        textInputAction: TextInputAction.go,
+                        textInputAction: TextInputAction.done,
                         validator: RequiredValidator(
                             errorText: 'Please Enter Password'),
-                        onFieldSubmitted: (value) => login,
+                        onFieldSubmitted: (value) => login(),
                         controller: passwordController,
                         obscureText: true,
                         decoration: const InputDecoration(
