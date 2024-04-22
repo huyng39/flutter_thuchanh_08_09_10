@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter_thuchanh_08/app/page/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../model/user.dart';
+import '../model/user/user.dart';
 
 //khai báo thêm biến token khi save user để tránh bị null token khi getList
 Future<bool> saveUser(User objUser,String token) async {

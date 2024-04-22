@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_thuchanh_08/app/data/api.dart';
-import 'package:flutter_thuchanh_08/app/model/register.dart';
+import 'package:flutter_thuchanh_08/app/model/user/register.dart';
 import 'package:flutter_thuchanh_08/app/page/auth/login.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';

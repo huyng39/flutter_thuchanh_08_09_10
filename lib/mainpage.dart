@@ -1,15 +1,20 @@
 import 'dart:convert';
-import 'package:flutter_thuchanh_08/app/model/category.dart';
-import 'package:flutter_thuchanh_08/app/model/user.dart';
+import 'package:flutter_thuchanh_08/app/model/category/category.dart';
+import 'package:flutter_thuchanh_08/app/model/product/cartcounter.dart';
+import 'package:flutter_thuchanh_08/app/model/product/product.dart';
+import 'package:flutter_thuchanh_08/app/model/product/product_viewmodel.dart';
+import 'package:flutter_thuchanh_08/app/model/user/user.dart';
 import 'package:flutter_thuchanh_08/app/page/detail.dart';
 import 'package:flutter_thuchanh_08/app/route/page1.dart';
 import 'package:flutter_thuchanh_08/app/route/page2.dart';
 import 'package:flutter_thuchanh_08/app/route/page3.dart';
 import 'package:flutter_thuchanh_08/app/page/product/productwidget_2.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../app/page/defaultwidget.dart';
 import '../app/data/sharepre.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_thuchanh_08/app/page/product/productcart.dart';
 
 class Mainpage extends StatefulWidget {
   const Mainpage({super.key});
@@ -59,8 +64,9 @@ class _MainpageState extends State<Mainpage> {
           return const ProductWidget();
         }
       case 3:
-        nameWidgets = "Cart";
-        break;
+        {
+          return const ProductCart();
+        }
       case 4:
         {
           return const Detail();
@@ -181,7 +187,7 @@ class _MainpageState extends State<Mainpage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -196,7 +202,22 @@ class _MainpageState extends State<Mainpage> {
             label: 'All product',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon: Stack(
+                children: [
+                  Positioned(
+                    child: Icon(Icons.shopping_bag),
+                  ), // Icon mặc định
+                  Positioned(
+                    right: 0,
+                    child: Consumer<ProductVM>(
+                      builder: (context, value, child) => CartCounter(
+                        count: value.lst.length.toString(),
+                      ),
+                    ),
+                  )
+                  // Icon mặc định
+                ],
+              ),
             label: 'Cart',
           ),
           BottomNavigationBarItem(

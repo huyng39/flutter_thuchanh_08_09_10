@@ -9,16 +9,19 @@ class Product {
   int? price;
   int? categoryID;
   String? categoryName;
+  int? quantity;
+  bool? isLike;
 
-  Product({
-    required this.id,
-    required this.nameProduct,
-    required this.description,
-    required this.imageURL,
-    required this.price,
-    required this.categoryID,
-    required this.categoryName,
-  });
+  Product(
+      {required this.id,
+      required this.nameProduct,
+      required this.description,
+      required this.imageURL,
+      required this.price,
+      required this.categoryID,
+      required this.categoryName,
+      this.quantity = 1,
+      this.isLike = false});
 
   static Product productEmpty() {
     return Product(

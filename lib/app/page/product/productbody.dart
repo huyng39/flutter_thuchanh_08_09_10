@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import '../../model/product.dart';
+import 'package:flutter_thuchanh_08/app/model/product/product_viewmodel.dart';
+import 'package:provider/provider.dart';
+import '../../model/product/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
@@ -87,7 +89,7 @@ import 'package:intl/intl.dart';
 Widget itemProView(Product productModel, BuildContext context) {
   return Container(
     margin: const EdgeInsets.only(left: 5, right: 5),
-    padding: const EdgeInsets.all(8),
+    padding: const EdgeInsets.all(1),
     decoration: BoxDecoration(
       color: Colors.grey.shade100,
       borderRadius: BorderRadius.circular(10.0),
@@ -126,9 +128,30 @@ Widget itemProView(Product productModel, BuildContext context) {
           style: const TextStyle(
               fontSize: 15, color: Colors.red, fontWeight: FontWeight.bold),
         ),
-        Text(
-          productModel.description!,
-          style: const TextStyle(fontSize: 12, color: Colors.blue),
+        // Text(
+        //   productModel.description!,
+        //   style: const TextStyle(fontSize: 11, color: Colors.blue),
+        // ),
+        Consumer<ProductVM>(
+          builder: (context, value, child) => ElevatedButton.icon(
+            icon: const Icon(
+              Icons.add_shopping_cart,
+              color: Colors.white,
+              size: 24,
+            ),
+            label: const Text('Add',
+            style: TextStyle(color: Colors.white,),
+            ),
+            onPressed: () {
+              value.add(productModel);
+            },
+            style: ElevatedButton.styleFrom(
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(20.0),
+              ),
+              backgroundColor: Colors.blue,
+            ),
+          ),
         ),
       ],
     ),

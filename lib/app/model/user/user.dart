@@ -1,6 +1,7 @@
 class User {
   String? idNumber;
-  String? accountId;
+  // caution this if error exists in productcart.dart
+  String accountId;
   String? fullName;
   String? phoneNumber;
   String? imageURL;

@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_thuchanh_08/app/data/api.dart';
-import '../../model/product.dart';
+import '../../model/product/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import '../product/productbody.dart';
@@ -128,12 +128,8 @@ class _ProductWidgetState extends State<ProductWidget> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: CircularProgressIndicator(),
-              // child: LoadingAnimationWidget.discreteCircle(
-              //   color: Colors.blue,
-              //   size: 200,
-              // ),
-            );
+                child: LoadingAnimationWidget.discreteCircle(
+                    color: Colors.blue, size: 50));
           } else if (snapshot.hasError) {
             return Center(
               child: Text(
@@ -156,7 +152,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                                   mainAxisSpacing: 8),
                           itemBuilder: ((context, index) {
                             final itemPro = snapshot.data![index];
-                            return itemProView(itemPro,context);
+                            return itemProView(itemPro, context);
                           })))
                 ],
               ),
@@ -164,25 +160,4 @@ class _ProductWidgetState extends State<ProductWidget> {
           }
         });
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     body: SingleChildScrollView(
-  //       child: Center(
-  //         child: Expanded(
-  //             child: GridView.builder(
-  //                 itemCount: lstPro.length,
-  //                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-  //                     crossAxisCount: 2,
-  //                     childAspectRatio: 1,
-  //                     crossAxisSpacing: 8,
-  //                     mainAxisSpacing: 8),
-  //                 itemBuilder: ((context, index) {
-  //                  return itemProView(lstPro[index]);
-  //                 }))),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

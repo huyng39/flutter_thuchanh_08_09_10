@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_thuchanh_08/app/config/const.dart';
 import 'package:flutter_thuchanh_08/app/data/api.dart';
-import '../register.dart';
+import 'register.dart';
 import 'package:flutter_thuchanh_08/mainpage.dart';
 import 'package:flutter/material.dart';
 import '../../data/sharepre.dart';
