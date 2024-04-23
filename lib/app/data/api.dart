@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_thuchanh_08/app/data/sharepre.dart';
+import 'package:flutter_thuchanh_08/app/model/category/category_product.dart';
 import 'package:flutter_thuchanh_08/app/model/product/product.dart';
+import 'package:flutter_thuchanh_08/app/model/category/category_product.dart';
 import 'package:flutter_thuchanh_08/app/model/user/register.dart';
 import 'package:flutter_thuchanh_08/app/model/user/user.dart';
 import 'package:flutter_thuchanh_08/app/model/order.dart';
@@ -136,7 +138,47 @@ class APIRepository with ChangeNotifier {
 
       // Gửi yêu cầu API
       Response res = await api.sendRequest
-          .get(path2.toString(), options: Options(headers: header(token)));
+          .get(path.toString(), options: Options(headers: header(token)));
+      // Kiểm tra mã phản hồi
+      if (res.statusCode == 200) {
+        // Xử lý và trả về dữ liệu
+        return List<Product>.from(
+            res.data.map((item) => Product.fromJson(item)));
+      } else {
+        // Nếu có lỗi, ném ra ngoại lệ
+        throw Exception('Failed to load products: ${res.statusCode}');
+      }
+    } catch (ex) {
+      print(ex);
+      rethrow;
+    }
+  }
+
+  // Lấy danh sách product theo category
+  Future<List<Product>> getProductbyCategory(int? categoryID) async {
+    try {
+      User user =
+          await getUser(); // Kiểm tra và tải thông tin người dùng từ bộ nhớ đệm
+
+      String token = await getToken();
+      var path = categoryID == null
+          ? '/Product/getList?accountID=${user.accountId}'
+          : '/Product/getListByCatId?categoryID=${categoryID}&accountID=${user.accountId}';
+
+      // Xây dựng URL với các tham số query
+      // var uri = categoryID == null
+      //     ? Uri.parse(path)
+      //         .replace(queryParameters: {'accountID': user.accountId})
+      //     : Uri.parse(path).replace(
+      //         queryParameters: {
+      //           'categoryID': categoryID,
+      //           'accountID': user.accountId
+      //         },
+      //       );
+
+      // Gửi yêu cầu API
+      Response res = await api.sendRequest
+          .get(path.toString(), options: Options(headers: header(token)));
       // Kiểm tra mã phản hồi
       if (res.statusCode == 200) {
         // Xử lý và trả về dữ liệu
@@ -275,6 +317,36 @@ class APIRepository with ChangeNotifier {
       }
     } catch (ex) {
       print('Lỗi: $ex');
+      rethrow;
+    }
+  }
+
+  // Lấy danh sách category
+  Future<List<Category>> getCategory() async {
+    try {
+      var path = '/Category/getList';
+      User user =
+          await getUser(); // Kiểm tra và tải thông tin người dùng từ bộ nhớ đệm
+      String token = await getToken();
+      // Xây dựng URL với các tham số query
+      var uri = Uri.parse(path).replace(queryParameters: {
+        'accountID': user.accountId,
+      });
+
+      // Gửi yêu cầu API
+      Response res = await api.sendRequest
+          .get(uri.toString(), options: Options(headers: header(token)));
+      // Kiểm tra mã phản hồi
+      if (res.statusCode == 200) {
+        // Xử lý và trả về dữ liệu
+        return List<Category>.from(
+            res.data.map((item) => Category.fromJson(item)));
+      } else {
+        // Nếu có lỗi, ném ra ngoại lệ
+        throw Exception('Failed to load categories: ${res.statusCode}');
+      }
+    } catch (ex) {
+      print(ex);
       rethrow;
     }
   }

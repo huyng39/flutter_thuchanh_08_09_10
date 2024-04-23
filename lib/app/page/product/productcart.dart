@@ -25,187 +25,204 @@ class _ProductCartState extends State<ProductCart> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          "Danh sách hàng hóa đã chọn",
-          style: TextStyle(
-            fontSize: 24,
-            color: Colors.blue,
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: Text(
+      //     'GIỎ HÀNG CỦA BẠN',
+      //     style: TextStyle(
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      //   backgroundColor: Colors.blue,
+      //   iconTheme: IconThemeData(color: Colors.white),
+      // ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            "Danh sách sản phẩm đã chọn",
+            style: TextStyle(
+              fontSize: 25,
+              color: Colors.blue,
+            ),
           ),
-        ),
-        Expanded(
-          child: Consumer<ProductVM>(
-            builder: (context, value, child) => Scaffold(
-              body: SafeArea(
-                child: Scaffold(
-                  body: ListView.builder(
-                      itemCount: value.lst.length,
-                      itemBuilder: ((context, index) {
-                        return itemListView(value.lst[index]);
-                      })),
+          const SizedBox(
+            width: 10,
+          ),
+          
+          Expanded(
+            child: Consumer<ProductVM>(
+              builder: (context, value, child) => Scaffold(
+                body: SafeArea(
+                  child: Scaffold(
+                    body: ListView.builder(
+                        itemCount: value.lst.length,
+                        itemBuilder: ((context, index) {
+                          return itemListView(value.lst[index]);
+                        })),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        SizedBox(height: 20), // Add some space between list and total
-        Consumer<ProductVM>(
-          builder: (context, value, child) {
-            final totalQuantity = value.getTotalQuantity();
-            final totalPrice = value.getTotalPrice();
-            return Column(
-              children: [
-                Text(
-                  'Tổng số lượng: $totalQuantity',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+          SizedBox(height: 20), // Add some space between list and total
+          Consumer<ProductVM>(
+            builder: (context, value, child) {
+              final totalQuantity = value.getTotalQuantity();
+              final totalPrice = value.getTotalPrice();
+              return Column(
+                children: [
+                  Text(
+                    'Tổng số lượng: $totalQuantity',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Tổng tiền: ${NumberFormat('###,###.### ₫').format(totalPrice)}',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                  SizedBox(height: 10),
+                  Text(
+                    'Tổng tiền: ${NumberFormat('###,###.### ₫').format(totalPrice)}',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                // Payment Button
-                ElevatedButton.icon(
-                  onPressed: () async {
-                    if (value.lst.length > 0) {
-                      // Handle payment logic here
-                      bool check = await APIRepository().addBill(value.lst);
-                      if (check == true) {
-                        value.lst.clear();
-                        print('Thanh toán thành công');
-                        setState(() {
-                          AwesomeDialog(
-                                context: context,
-                                dialogType: DialogType.success,
-                                animType: AnimType.scale,
-                                title: 'Thanh toán thành công',
-                                desc: 'Cảm ơn bạn đã mua hàng.',
-                                btnOkOnPress: () {},
-                                headerAnimationLoop: false,
-                              ).show();
-                        });
-                        // setState(() {
-                        //   showDialog(
-                        //     context: context,
-                        //     builder: (BuildContext context) {
-                        //       return AlertDialog(
-                        //         title: Column(
-                        //           children: [
-                        //             Icon(Icons.check_circle,
-                        //                 color: Colors.green,size: 50,), // Success icon
-                        //             SizedBox(width: 10),
-                        //             Text(
-                        //               "Thanh toán thành công",
-                        //               style: TextStyle(color: Colors.green),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //         content: Text(
-                        //           "Cảm ơn bạn đã mua hàng.",
-                        //           style: TextStyle(color: Colors.black87),
-                        //         ),
-                        //         actions: [
-                        //           TextButton(
-                        //             onPressed: () {
-                        //               Navigator.of(context).pop();
-                        //             },
-                        //             child: Text("Đóng"),
+                  SizedBox(height: 10),
+                  // Payment Button
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      if (value.lst.length > 0) {
+                        // Handle payment logic here
+                        bool check = await APIRepository().addBill(value.lst);
+                        if (check == true) {
+                          value.lst.clear();
+                          print('Thanh toán thành công');
+                          setState(() {
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.success,
+                              animType: AnimType.scale,
+                              title: 'Thanh toán thành công',
+                              desc: 'Cảm ơn bạn đã mua hàng.',
+                              btnOkOnPress: () {},
+                              headerAnimationLoop: false,
+                            ).show();
+                          });
+                          // setState(() {
+                          //   showDialog(
+                          //     context: context,
+                          //     builder: (BuildContext context) {
+                          //       return AlertDialog(
+                          //         title: Column(
+                          //           children: [
+                          //             Icon(Icons.check_circle,
+                          //                 color: Colors.green,size: 50,), // Success icon
+                          //             SizedBox(width: 10),
+                          //             Text(
+                          //               "Thanh toán thành công",
+                          //               style: TextStyle(color: Colors.green),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         content: Text(
+                          //           "Cảm ơn bạn đã mua hàng.",
+                          //           style: TextStyle(color: Colors.black87),
+                          //         ),
+                          //         actions: [
+                          //           TextButton(
+                          //             onPressed: () {
+                          //               Navigator.of(context).pop();
+                          //             },
+                          //             child: Text("Đóng"),
+                          //           ),
+                          //         ],
+                          //       );
+                          //     },
+                          //   );
+                          // });
+                        } else
+                          print('Thanh toán không thành công');
+                      } else {
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.error,
+                          animType: AnimType.scale,
+                          title: 'Không thể thanh toán',
+                          desc:
+                              'Vui lòng thêm ít nhất một sản phẩm\ntrước khi thanh toán',
+                          btnOkOnPress: () {},
+                          btnOkColor: Colors.red,
+                          headerAnimationLoop: false,
+                        ).show();
+                        // Show dialog to add items
+                        // showDialog(
+                        //   context: context,
+                        //   builder: (BuildContext context) {
+                        //     return AlertDialog(
+                        //       title: Column(
+                        //         children: [
+                        //           Icon(
+                        //             Icons.cancel,
+                        //             color: Colors.red,
+                        //             size: 50,
+                        //           ), // Error icon
+                        //           SizedBox(width: 5),
+                        //           Text(
+                        //             "Không thể thanh toán!",
+                        //             style: TextStyle(color: Colors.red),
                         //           ),
                         //         ],
-                        //       );
-                        //     },
-                        //   );
-                        // });
-                        
-                      } else
-                        print('Thanh toán không thành công');
-                    } else {
-                      AwesomeDialog(
-                                context: context,
-                                dialogType: DialogType.error,
-                                animType: AnimType.scale,
-                                title: 'Không thể thanh toán',
-                                desc: 'Vui lòng thêm ít nhất một sản phẩm\ntrước khi thanh toán',
-                                btnOkOnPress: () {},
-                                btnOkColor: Colors.red,
-                                headerAnimationLoop: false,
-                              ).show();
-                      // Show dialog to add items
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (BuildContext context) {
-                      //     return AlertDialog(
-                      //       title: Column(
-                      //         children: [
-                      //           Icon(
-                      //             Icons.cancel,
-                      //             color: Colors.red,
-                      //             size: 50,
-                      //           ), // Error icon
-                      //           SizedBox(width: 5),
-                      //           Text(
-                      //             "Không thể thanh toán!",
-                      //             style: TextStyle(color: Colors.red),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       content: Text(
-                      //         "Vui lòng thêm ít nhất một sản phẩm trước khi thanh toán.",
-                      //         style: TextStyle(color: Colors.black87),
-                      //       ),
-                      //       actions: [
-                      //         TextButton(
-                      //           onPressed: () {
-                      //             Navigator.of(context).pop();
-                      //           },
-                      //           child: Text("Đóng"),
-                      //         ),
-                      //       ],
-                      //     );
-                      //   },
-                      // );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 30),
-                    backgroundColor:
-                        Colors.blue, // Change the button color here
-                    elevation: 5, // Add elevation for shadow effect
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(30.0), // Rounded corner radius
+                        //       ),
+                        //       content: Text(
+                        //         "Vui lòng thêm ít nhất một sản phẩm trước khi thanh toán.",
+                        //         style: TextStyle(color: Colors.black87),
+                        //       ),
+                        //       actions: [
+                        //         TextButton(
+                        //           onPressed: () {
+                        //             Navigator.of(context).pop();
+                        //           },
+                        //           child: Text("Đóng"),
+                        //         ),
+                        //       ],
+                        //     );
+                        //   },
+                        // );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 14, horizontal: 30),
+                      backgroundColor:
+                          Colors.blue, // Change the button color here
+                      elevation: 5, // Add elevation for shadow effect
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            30.0), // Rounded corner radius
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.payment,
+                      color: Colors.white,
+                    ), // Add icon here
+                    label: Text(
+                      'Thanh toán',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white, // Change text color
+                      ),
                     ),
                   ),
-                  icon: Icon(
-                    Icons.payment,
-                    color: Colors.white,
-                  ), // Add icon here
-                  label: Text(
-                    'Thanh toán',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white, // Change text color
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                )
-              ],
-            );
-          },
-        ),
-      ],
+                  SizedBox(
+                    height: 10,
+                  )
+                ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 

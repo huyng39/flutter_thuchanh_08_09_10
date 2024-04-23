@@ -4,11 +4,12 @@ import 'package:flutter_thuchanh_08/app/model/product/cartcounter.dart';
 import 'package:flutter_thuchanh_08/app/model/product/product.dart';
 import 'package:flutter_thuchanh_08/app/model/product/product_viewmodel.dart';
 import 'package:flutter_thuchanh_08/app/model/user/user.dart';
+import 'package:flutter_thuchanh_08/app/page/category/category_list.dart';
 import 'package:flutter_thuchanh_08/app/page/detail.dart';
 import 'package:flutter_thuchanh_08/app/route/page1.dart';
 import 'package:flutter_thuchanh_08/app/route/page2.dart';
 import 'package:flutter_thuchanh_08/app/route/page3.dart';
-import 'package:flutter_thuchanh_08/app/page/product/productwidget_2.dart';
+import 'package:flutter_thuchanh_08/app/page/product/productwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../app/page/defaultwidget.dart';
@@ -56,8 +57,9 @@ class _MainpageState extends State<Mainpage> {
         nameWidgets = "Home";
         break;
       case 1:
-       nameWidgets = "Category";
-        break;
+        {
+          return const CategoryList();
+        }
       // nút all product dành cho việc thử nghiệm get list sản phẩm
       case 2:
         {
@@ -82,9 +84,9 @@ class _MainpageState extends State<Mainpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("HL Mobile"),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        // title: const Text("HL Mobile"),
+        // backgroundColor: Colors.blue,
+        // foregroundColor: Colors.white,
       ),
       drawer: Drawer(
         child: ListView(
@@ -157,8 +159,10 @@ class _MainpageState extends State<Mainpage> {
               onTap: () {
                 Navigator.pop(context);
                 _selectedIndex = 0;
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const ChangePassword()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChangePassword()));
               },
             ),
             // ListTile(
@@ -203,21 +207,32 @@ class _MainpageState extends State<Mainpage> {
           ),
           BottomNavigationBarItem(
             icon: Stack(
-                children: [
-                  Positioned(
-                    child: Icon(Icons.shopping_bag),
-                  ), // Icon mặc định
-                  Positioned(
-                    right: 0,
-                    child: Consumer<ProductVM>(
-                      builder: (context, value, child) => CartCounter(
-                        count: value.lst.length.toString(),
-                      ),
-                    ),
-                  )
-                  // Icon mặc định
-                ],
-              ),
+              children: [
+                const Positioned(
+                  child: Icon(Icons.shopping_cart),
+                ), // Icon mặc định
+                Consumer<ProductVM>(
+                  builder: (context, value, child) {
+                    if (value.lst.length > 0) {
+                      return Positioned(
+                        right: 0,
+                        child: Consumer<ProductVM>(
+                          builder: (context, value, child) => CartCounter(
+                            count: value.lst.length.toString(),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return const Positioned(
+                        child: Icon(Icons.shopping_cart),
+                      );
+                    }
+                  },
+                ),
+
+                // Icon mặc định
+              ],
+            ),
             label: 'Cart',
           ),
           BottomNavigationBarItem(

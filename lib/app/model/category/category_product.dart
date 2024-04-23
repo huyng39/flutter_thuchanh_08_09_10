@@ -1,23 +1,23 @@
 class Category {
   int? id;
-  String? name;
+  String name;
   String? imageURL;
-  String? description;
+  String description;
   
   Category({
-    required this.id,
+    this.id,
     required this.name,
-    required this.imageURL,
+    this.imageURL,
     required this.description,
   });
 
-  static Category categoryEmpty() {
-    return Category(
-        id: null,
-        name: '',
-        description: '',
-        imageURL: '');
-  }
+  // static Category categoryEmpty() {
+  //   return Category(
+  //       id: null,
+  //       name: '',
+  //       description: '',
+  //       imageURL: '');
+  // }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

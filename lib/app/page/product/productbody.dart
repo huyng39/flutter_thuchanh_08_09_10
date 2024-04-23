@@ -121,7 +121,7 @@ Widget itemProView(Product productModel, BuildContext context) {
         Text(
           productModel.nameProduct ?? '',
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
         ),
         Text(
           NumberFormat('###,###.### ₫').format(productModel.price),
