@@ -19,7 +19,14 @@ class MainApp extends StatelessWidget {
           create: (context) => ProductVM(),
         ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: ThemeData(
+          inputDecorationTheme: const InputDecorationTheme(
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue),
+            ),
+          ),
+        ),
         debugShowCheckedModeBanner: false,
         home: LoginScreen(),
       ),

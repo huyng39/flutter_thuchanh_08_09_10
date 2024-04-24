@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_thuchanh_08/app/data/sharepre.dart';
 import 'package:flutter_thuchanh_08/app/model/category/category_product.dart';
+import 'package:flutter_thuchanh_08/app/model/order/orderDetaile.dart';
 import 'package:flutter_thuchanh_08/app/model/product/product.dart';
 import 'package:flutter_thuchanh_08/app/model/category/category_product.dart';
 import 'package:flutter_thuchanh_08/app/model/user/register.dart';
@@ -256,7 +257,7 @@ class APIRepository with ChangeNotifier {
 
   // Lấy thông tin chi tiết hóa đơn
   // Lấy danh sách hóa đơn
-  Future<List<OrderModel>> getDetaileBill(String billID) async {
+  Future<List<OrderDetaileModel>> getDetaileBill(String billID) async {
     try {
       var path = '/Bill/getByID';
       // User user =
@@ -274,8 +275,8 @@ class APIRepository with ChangeNotifier {
       if (res.statusCode == 200) {
         // Xử lý và trả về dữ liệu
         print('Lấy thông tin hóa đơn $billID thành công!');
-        return List<OrderModel>.from(
-            res.data.map((item) => OrderModel.fromJson(item)));
+        return List<OrderDetaileModel>.from(
+            res.data.map((item) => OrderDetaileModel.fromJson(item)));
       } else {
         // Nếu có lỗi, ném ra ngoại lệ
         throw Exception('Failed to load order : ${res.statusCode}');
@@ -344,6 +345,58 @@ class APIRepository with ChangeNotifier {
       } else {
         // Nếu có lỗi, ném ra ngoại lệ
         throw Exception('Failed to load categories: ${res.statusCode}');
+      }
+    } catch (ex) {
+      print(ex);
+      rethrow;
+    }
+  }
+
+  // Đổi mật khẩu
+  Future<bool> changePassword(String oldPass, String newPassowrd) async {
+    try {
+      String token = await getToken();
+      String path = '/Auth/ChangePassword';
+      print(oldPass + " " + newPassowrd);
+      final body = FormData.fromMap(
+        {
+          "OldPassword": oldPass,
+          "NewPassword": newPassowrd,
+        },
+      );
+      Response res = await api.sendRequest.put(path.toString(),
+          options: Options(headers: header(token)), data: body);
+      if (res.statusCode == 200) {
+        print("Đổi mật khẩu thành công");
+        return true;
+      } else {
+        print("Đổi mật khẩu không thành công: ${res.statusMessage}");
+        return false;
+      }
+    } catch (ex) {
+      print(ex);
+      return false;
+    }
+  }
+
+  // Quên mật khẩu
+  Future<bool> forgotPassword(
+      String accountID, String numberID, String newPassowrd) async {
+    try {
+      String token = await getToken();
+      final body = FormData.fromMap({
+        "accountID": accountID,
+        "numberID": numberID,
+        "newPass": newPassowrd
+      });
+      Response res = await api.sendRequest.put('/Auth/forgetPass',
+          options: Options(headers: header(token)), data: body);
+      if (res.statusCode == 200) {
+        print("Đặt lại password thành công");
+        return true;
+      } else {
+        print("Đặt lại password không thành công");
+        return false;
       }
     } catch (ex) {
       print(ex);

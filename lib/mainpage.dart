@@ -1,14 +1,15 @@
 import 'dart:convert';
+import 'package:flutter_thuchanh_08/app/config/const.dart';
 import 'package:flutter_thuchanh_08/app/model/category/category.dart';
 import 'package:flutter_thuchanh_08/app/model/product/cartcounter.dart';
 import 'package:flutter_thuchanh_08/app/model/product/product.dart';
 import 'package:flutter_thuchanh_08/app/model/product/product_viewmodel.dart';
 import 'package:flutter_thuchanh_08/app/model/user/user.dart';
 import 'package:flutter_thuchanh_08/app/page/category/category_list.dart';
-import 'package:flutter_thuchanh_08/app/page/detail.dart';
-import 'package:flutter_thuchanh_08/app/route/page1.dart';
-import 'package:flutter_thuchanh_08/app/route/page2.dart';
-import 'package:flutter_thuchanh_08/app/route/page3.dart';
+import 'package:flutter_thuchanh_08/app/page/auth/detail.dart';
+import 'package:flutter_thuchanh_08/app/route/favoritelist.dart';
+import 'package:flutter_thuchanh_08/app/route/changepassword.dart';
+import 'package:flutter_thuchanh_08/app/route/buyHistory.dart';
 import 'package:flutter_thuchanh_08/app/page/product/productwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -84,9 +85,9 @@ class _MainpageState extends State<Mainpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: const Text("HL Mobile"),
-        // backgroundColor: Colors.blue,
-        // foregroundColor: Colors.white,
+        title: const Text("HL Mobile"),
+        backgroundColor: appBarBackgroundColor,
+        foregroundColor: Colors.white,
       ),
       drawer: Drawer(
         child: ListView(
@@ -131,18 +132,19 @@ class _MainpageState extends State<Mainpage> {
               onTap: () {
                 Navigator.pop(context);
                 _selectedIndex = 1;
-                setState(() {});
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const BuyHistory()));
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.contact_mail),
-              title: const Text('Cart'),
-              onTap: () {
-                Navigator.pop(context);
-                _selectedIndex = 2;
-                setState(() {});
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.contact_mail),
+            //   title: const Text('Cart'),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     _selectedIndex = 2;
+            //     setState(() {});
+            //   },
+            // ),
             ListTile(
               leading: const Icon(Icons.favorite),
               title: const Text('Favorite List'),
@@ -150,7 +152,7 @@ class _MainpageState extends State<Mainpage> {
                 Navigator.pop(context);
                 _selectedIndex = 0;
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Page1()));
+                    MaterialPageRoute(builder: (context) => const FavoriteList()));
               },
             ),
             ListTile(

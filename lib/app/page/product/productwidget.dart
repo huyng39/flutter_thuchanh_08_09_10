@@ -75,23 +75,26 @@ class _ProductWidgetState extends State<ProductWidget> {
               ),
             );          
           } else {
-            return Center(
-              child: Column(
-                children: [
-                  Expanded(
-                      child: GridView.builder(
-                          itemCount: snapshot.data!.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 1,
-                                  crossAxisSpacing: 8,
-                                  mainAxisSpacing: 8),
-                          itemBuilder: ((context, index) {
-                            final itemPro = snapshot.data![index];
-                            return itemProView(itemPro, context);
-                          })))
-                ],
+            return Padding(
+              padding: const EdgeInsets.only(top: 4.5),
+              child: Center(
+                child: Column(
+                  children: [
+                    Expanded(
+                        child: GridView.builder(
+                            itemCount: snapshot.data!.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 1,
+                                    crossAxisSpacing: 8,
+                                    mainAxisSpacing: 8),
+                            itemBuilder: ((context, index) {
+                              final itemPro = snapshot.data![index];
+                              return itemProView(itemPro, context);
+                            })))
+                  ],
+                ),
               ),
             );
           }

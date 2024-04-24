@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_thuchanh_08/app/model/product/cartcounter.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_thuchanh_08/app/config/const.dart';
 import 'package:flutter_thuchanh_08/app/model/product/product.dart';
@@ -39,17 +40,92 @@ class _ProductCartState extends State<ProductCart> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            "Danh sách sản phẩm đã chọn",
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.blue,
-            ),
+          // const Text(
+          //       "Danh sách giỏ hàng",
+          //       style: TextStyle(
+          //         fontSize: 25,
+          //         color: Colors.blue,
+          //       ),
+          //     ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Danh sách giỏ hàng",
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.blue,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Consumer<ProductVM>(
+                builder: (context, value, child) => InkWell(
+                  onTap: () {
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.warning,
+                      animType: AnimType.scale,
+                      title: 'Xóa tất cả',
+                      desc:
+                          'Bạn có chắc chắn xóa hết tất cả sản phẩm trong giỏ hàng?',
+                      btnOkOnPress: () {
+                        value.deleteAll();
+                        print('Bạn vừa nhấn nút xóa hết');
+                      },
+                      btnCancelText: "Quay lại",
+                      btnOkText: "Xóa",
+                      btnCancelColor: Colors.blue,
+                      btnOkColor: Colors.red,
+                      btnCancelOnPress: () {},
+                      headerAnimationLoop: false,
+                    ).show();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(right: 0),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: Offset(0, 2), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Icon(
+                      Icons.delete_forever,
+                      color: Colors.white,
+                    ),
+                    // Row(
+                    //   mainAxisSize: MainAxisSize.min,
+                    //   children: [
+                    //     Icon(
+                    //       Icons.delete_forever,
+                    //       color: Colors.white,
+                    //     ),
+                    //     SizedBox(width: 5),
+                    //     Text(
+                    //       'Xóa hết',
+                    //       style: TextStyle(
+                    //         color: Colors.white,
+                    //         fontWeight: FontWeight.bold,
+                    //         fontSize: 16,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(
-            width: 10,
-          ),
-          
+
           Expanded(
             child: Consumer<ProductVM>(
               builder: (context, value, child) => Scaffold(

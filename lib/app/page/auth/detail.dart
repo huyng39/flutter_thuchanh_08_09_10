@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import '../model/user/user.dart';
+import 'package:flutter_thuchanh_08/app/page/auth/change_info.dart';
+import '../../model/user/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -60,6 +61,32 @@ class _DetailState extends State<Detail> {
                       Text("schoolYear: ${user.schoolYear}", style: mystyle),
                       Text("schoolKey: ${user.schoolKey}", style: mystyle),
                       Text("dateCreated: ${user.dateCreated}", style: mystyle),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blue, // Màu chữ và icon
+                          minimumSize:
+                              Size(150, 50), // Kích thước tối thiểu của nút
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10), // Padding bên trong nút
+                        ),
+                        icon: Icon(Icons.edit),
+                        label: Text(
+                          "Sửa thông tin",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          // Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ChangeInfo()));
+                        },
+                      ),
                     ]),
               ),
             ),

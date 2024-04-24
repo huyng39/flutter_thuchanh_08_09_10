@@ -1,5 +1,6 @@
 // ignore_for_file: unused_label
 import 'package:flutter/material.dart';
+import 'package:flutter_thuchanh_08/app/config/const.dart';
 import 'package:flutter_thuchanh_08/app/data/api.dart';
 import 'package:flutter_thuchanh_08/app/model/product/cartcounter.dart';
 import 'package:flutter_thuchanh_08/app/model/product/product_viewmodel.dart';
@@ -62,12 +63,10 @@ class _ProductWidgetState extends State<ProductWidget> {
       appBar: AppBar(
         title: Text(
           '${widget.objCat?.name.toString()}',
-          style: TextStyle(
-            color: Colors.white,
-          ),
+          style: titleStyle,
         ),
-        backgroundColor: Colors.blue,
-        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: appBarBackgroundColor,
+        iconTheme: iconBackColor,
         actions: [
           InkWell(
             onTap: () {

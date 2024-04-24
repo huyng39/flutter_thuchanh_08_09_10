@@ -4,6 +4,33 @@ import 'package:flutter_thuchanh_08/app/model/product/product.dart';
 
 class ProductVM with ChangeNotifier {
   List<Product> lst = [];
+  List<Product> lstFavorite = [];
+
+   // Hàm thêm sản phẩm vào danh sách yêu thích
+  void addOrRemoveFavorites(Product product) {
+    // Kiểm tra xem sản phẩm đã tồn tại trong danh sách yêu thích chưa
+    bool isExisting = lstFavorite.any((element) => element.id == product.id);
+
+    // Nếu sản phẩm chưa tồn tại trong danh sách yêu thích, thêm vào
+    if (!isExisting) {
+      lstFavorite.add(product);
+      // notifyListeners();
+    } else {
+      lstFavorite.removeWhere((element) => element.id == product.id);
+    }
+    notifyListeners();
+  }
+
+  // Hàm xóa danh sách yêu thích
+  void removeFavorite(Product product) {
+    // Kiểm tra xem sản phẩm đã tồn tại trong danh sách yêu thích chưa
+    bool isExisting = lstFavorite.any((element) => element.id == product.id);
+    // Nếu sản phẩm chưa tồn tại trong danh sách yêu thích, thêm vào
+    if (isExisting) {
+      lstFavorite.remove(product);
+      notifyListeners();
+    }
+  }
   // thêm 1 item vào danh sách
   add(Product pro) {
     // Check if the product already exists in the cart

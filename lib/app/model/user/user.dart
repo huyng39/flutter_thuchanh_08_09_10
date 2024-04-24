@@ -4,7 +4,7 @@ class User {
   String accountId;
   String? fullName;
   String? phoneNumber;
-  String? imageURL;
+  String imageURL;
   String? birthDay;
   String? gender;
   String? schoolYear;

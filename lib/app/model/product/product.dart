@@ -13,13 +13,13 @@ class Product {
   bool? isLike;
 
   Product(
-      {required this.id,
-      required this.nameProduct,
-      required this.description,
-      required this.imageURL,
-      required this.price,
-      required this.categoryID,
-      required this.categoryName,
+      {this.id,
+      this.nameProduct,
+      this.description,
+      this.imageURL,
+      this.price,
+      this.categoryID,
+      this.categoryName,
       this.quantity = 1,
       this.isLike = false});
 
