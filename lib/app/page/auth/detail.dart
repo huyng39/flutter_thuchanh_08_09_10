@@ -48,10 +48,17 @@ class _DetailState extends State<Detail> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image(
-                        image: NetworkImage(user.imageURL!),
-                        height: 200,
-                        width: 200,
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(user.imageURL),
+                        radius: 70,
+                      ),
+                      // Image(
+                      //   image: NetworkImage(user.imageURL!),
+                      //   height: 200,
+                      //   width: 200,
+                      // ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       Text("NumberID: ${user.idNumber}", style: mystyle),
                       Text("Fullname: ${user.fullName}", style: mystyle),

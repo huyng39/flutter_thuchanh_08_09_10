@@ -132,8 +132,10 @@ class _MainpageState extends State<Mainpage> {
               onTap: () {
                 Navigator.pop(context);
                 _selectedIndex = 1;
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const BuyHistory()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const BuyHistory()));
               },
             ),
             // ListTile(
@@ -151,8 +153,10 @@ class _MainpageState extends State<Mainpage> {
               onTap: () {
                 Navigator.pop(context);
                 _selectedIndex = 0;
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const FavoriteList()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FavoriteList()));
               },
             ),
             ListTile(

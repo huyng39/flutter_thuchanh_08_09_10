@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_thuchanh_08/app/config/const.dart';
 import 'package:flutter_thuchanh_08/app/data/api.dart';
 import 'package:flutter_thuchanh_08/app/model/order.dart';
 import 'package:flutter_thuchanh_08/app/model/order/orderDetaile.dart';
@@ -37,7 +38,9 @@ class _OrderDetaileState extends State<OrderDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Thông tin đơn hàng'),
+        title: Text('Thông tin đơn hàng',style: titleStyle,),
+        backgroundColor: appBarBackgroundColor,
+        iconTheme: iconBackColor,
         leading: IconButton(
           icon: Icon(Icons.arrow_back), // Icon quay lại mặc định
           onPressed: () {

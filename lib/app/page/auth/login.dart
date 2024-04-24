@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const Text(
                         "THÔNG TIN ĐĂNG NHẬP",
-                        style: TextStyle(fontSize: 24, color: Colors.blue),
+                        style: TextStyle(fontSize: 24, color: Colors.blue,fontWeight: FontWeight.bold),
                       ),
                       TextFormField(
                         textInputAction: TextInputAction.next,
