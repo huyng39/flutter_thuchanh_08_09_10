@@ -12,6 +12,7 @@ import 'package:flutter_thuchanh_08/app/route/changepassword.dart';
 import 'package:flutter_thuchanh_08/app/route/buyHistory.dart';
 import 'package:flutter_thuchanh_08/app/page/product/productwidget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_thuchanh_08/app/route/homePage.dart';
 import 'package:provider/provider.dart';
 import '../app/page/defaultwidget.dart';
 import '../app/data/sharepre.dart';
@@ -55,8 +56,9 @@ class _MainpageState extends State<Mainpage> {
     var nameWidgets = "Home";
     switch (index) {
       case 0:
-        nameWidgets = "Home";
-        break;
+        {
+          return const HomePage();
+        }
       case 1:
         {
           return const CategoryList();
@@ -64,16 +66,16 @@ class _MainpageState extends State<Mainpage> {
       // nút all product dành cho việc thử nghiệm get list sản phẩm
       case 2:
         {
-          return const ProductWidget();
+          return const ProductCart();
         }
       case 3:
         {
-          return const ProductCart();
-        }
-      case 4:
-        {
           return const FavoriteList();
         }
+      // case 4:
+      //   {
+      //     return const FavoriteList();
+      //   }
       default:
         nameWidgets = "None";
         break;
@@ -117,21 +119,21 @@ class _MainpageState extends State<Mainpage> {
                 ],
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-                _selectedIndex = 0;
-                setState(() {});
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.home),
+            //   title: const Text('Home'),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     _selectedIndex = 0;
+            //     setState(() {});
+            //   },
+            // ),
             ListTile(
               leading: const Icon(Icons.history),
               title: const Text('Buy History'),
               onTap: () {
                 Navigator.pop(context);
-                _selectedIndex = 1;
+                // _selectedIndex = 1;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -209,10 +211,10 @@ class _MainpageState extends State<Mainpage> {
             label: 'Category',
           ),
           // nút all product dành cho việc thử nghiệm get list sản phẩm
-          BottomNavigationBarItem(
-            icon: Icon(Icons.inventory),
-            label: 'All product',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.inventory),
+          //   label: 'All product',
+          // ),
           BottomNavigationBarItem(
             icon: Stack(
               children: [
