@@ -72,7 +72,7 @@ class _MainpageState extends State<Mainpage> {
         }
       case 4:
         {
-          return const Detail();
+          return const FavoriteList();
         }
       default:
         nameWidgets = "None";
@@ -138,27 +138,29 @@ class _MainpageState extends State<Mainpage> {
                         builder: (context) => const BuyHistory()));
               },
             ),
-            // ListTile(
-            //   leading: const Icon(Icons.contact_mail),
-            //   title: const Text('Cart'),
-            //   onTap: () {
-            //     Navigator.pop(context);
-            //     _selectedIndex = 2;
-            //     setState(() {});
-            //   },
-            // ),
             ListTile(
-              leading: const Icon(Icons.favorite),
-              title: const Text('Favorite List'),
+              leading: const Icon(Icons.person),
+              title: const Text('User Information'),
               onTap: () {
                 Navigator.pop(context);
-                _selectedIndex = 0;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const FavoriteList()));
+                        builder: (context) => const Detail()));
               },
             ),
+            // ListTile(
+            //   leading: const Icon(Icons.favorite),
+            //   title: const Text('Favorite List'),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     _selectedIndex = 0;
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => const FavoriteList()));
+            //   },
+            // ),
             ListTile(
               leading: const Icon(Icons.key),
               title: const Text('Change password'),
@@ -242,8 +244,8 @@ class _MainpageState extends State<Mainpage> {
             label: 'Cart',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'User',
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -23,11 +23,11 @@ class _FavoriteListState extends State<FavoriteList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Danh sách yêu thích",style: titleStyle),
-        backgroundColor: appBarBackgroundColor,
-        iconTheme: iconBackColor,
-      ),
+      // appBar: AppBar(
+      //   title: const Text("Danh sách yêu thích",style: titleStyle),
+      //   backgroundColor: appBarBackgroundColor,
+      //   iconTheme: iconBackColor,
+      // ),
       body: Column(
         children: [
           Expanded(
