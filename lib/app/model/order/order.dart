@@ -1,14 +1,14 @@
 class OrderModel {
-  String id;
-  String fullName;
-  String dateCreated;
-  int total;
+  String? id;
+  String? fullName;
+  String? dateCreated;
+  int? total;
 
   OrderModel({
-    required this.id,
-    required this.fullName,
-    required this.dateCreated,
-    required this.total,
+    this.id,
+    this.fullName,
+    this.dateCreated,
+    this.total,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
