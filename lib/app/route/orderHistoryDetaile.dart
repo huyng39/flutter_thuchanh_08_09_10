@@ -219,7 +219,7 @@ class _OrderDetaileState extends State<OrderDetail> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           'Đặt lại đơn hàng thành công!',
-          style: TextStyle(color: Colors.green),
+          style: TextStyle(color: Colors.white),
         ),
         duration: Duration(seconds: 2),
       ));
